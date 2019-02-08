@@ -1,0 +1,77 @@
+version: '3.7'
+
+services:
+
+  wordpress:
+    build: .
+    restart: always
+    depends_on:
+      - database
+    volumes:
+      - ./public:/var/www/html:cached
+      - ./config/php/php.ini:/usr/local/etc/php/php.ini
+      - ./config/wordpress/wp-cli.local.yml:/var/www/html/wp-cli.local.yml
+      - ./config/home/.bash_profile:/var/www/.bash_profile
+      - ./logs/php:/var/log/php
+      - ./logs/npm:/var/www/npm/_logs
+      - ./config/mysql/my.cnf:/etc/my.cnf
+      - ~/.ssh:/var/www/.ssh
+    environment:
+      WORDPRESS_DB_HOST: developercafe_database
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASS}
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_AUTH_KEY: ${WORDPRESS_AUTH_KEY}
+      WORDPRESS_SECURE_AUTH_KEY: ${WORDPRESS_SECURE_AUTH_KEY}
+      WORDPRESS_LOGGED_IN_KEY: ${WORDPRESS_LOGGED_IN_KEY}
+      WORDPRESS_NONCE_KEY: ${WORDPRESS_NONCE_KEY}
+      WORDPRESS_AUTH_SALT: ${WORDPRESS_AUTH_SALT}
+      WORDPRESS_SECURE_AUTH_SALT: ${WORDPRESS_SECURE_AUTH_SALT}
+      WORDPRESS_LOGGED_IN_SALT: ${WORDPRESS_LOGGED_IN_SALT}
+      WORDPRESS_NONCE_SALT: ${WORDPRESS_NONCE_SALT}
+      WORDPRESS_DEBUG: ${WORDPRESS_DEBUG}
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+    container_name: developercafe_wordpress
+
+  database:
+    image: mysql:8
+    command: '--default-authentication-plugin=mysql_native_password'
+    restart: always
+    ports:
+      - ${DB_PORT}:3306
+    volumes:
+      - ./data/db:/var/lib/mysql:delegated
+      - ./config/mysql/my.cnf:/etc/my.cnf
+      - ./config/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./logs/mysql:/var/log/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+    healthcheck:
+      test: mysqladmin ping -u${DB_USER} -p${DB_PASS} -hlocalhost || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    container_name: developercafe_database
+
+  webserver:
+    image: nginx:latest
+    restart: always
+    volumes:
+      - ./public:/var/www/html:cached
+      - ./config/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./logs/nginx:/var/log/nginx
+    depends_on:
+      - wordpress
+    container_name: developercafe_webserver
+    environment:
+      VIRTUAL_HOST: ${LOCAL_DOMAIN}
+    expose:
+      - 80
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
