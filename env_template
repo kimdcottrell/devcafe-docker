@@ -1,0 +1,23 @@
+# WordPress
+WORDPRESS_AUTH_KEY=
+WORDPRESS_SECURE_AUTH_KEY=
+WORDPRESS_LOGGED_IN_KEY=
+WORDPRESS_NONCE_KEY=
+WORDPRESS_AUTH_SALT=
+WORDPRESS_SECURE_AUTH_SALT=
+WORDPRESS_LOGGED_IN_SALT=
+WORDPRESS_NONCE_SALT=
+WORDPRESS_DEBUG=0
+
+# WordPress Database - must be the name of the database container in docker-compose.yml
+WORDPRESS_DB_HOST=developercafe_database
+
+# Database Config
+DB_ROOT_PASS=
+DB_USER=
+DB_PASS=
+DB_NAME=
+DB_PORT=
+
+# Nginx Proxy - also seen in config/nginx/default.conf
+LOCAL_DOMAIN=developer.cafe
