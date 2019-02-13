@@ -1,0 +1,17 @@
+{
+  "name": "coffee/wp-template",
+  "description": "A fully flushed out WordPress Docker image, networked via the Nginx-Proxy container, complete with WP_UnitTestCase and the WP-CLI with PsySH.",
+  "repositories":[
+    {
+      "type":"composer",
+      "url":"https://wpackagist.org"
+    }
+  ],
+  "require": {
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6",
+    "wp-cli/wp-cli-bundle": "*",
+    "psy/psysh": "*"
+  }
+}
