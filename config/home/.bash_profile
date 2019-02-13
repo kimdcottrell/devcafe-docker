@@ -3,12 +3,4 @@ parse_git_branch() {
 }
 export PS1="\u@devcafe \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
 
-wp() {
-    if [[ $@ == "psysh" ]]; then
-        command wp shell --require="psysh"
-    else
-        command wp "$@"
-    fi
-}
-
 export PATH="/var/www/html/vendor/bin:$PATH"

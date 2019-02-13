@@ -17,21 +17,12 @@ services:
       - ./config/mysql/my.cnf:/etc/my.cnf
       - ~/.ssh:/var/www/.ssh
     environment:
-      WORDPRESS_DB_HOST: developercafe_database
+      WORDPRESS_DB_HOST: ${SERVICE_GROUP}_database
       WORDPRESS_DB_USER: ${DB_USER}
       WORDPRESS_DB_PASSWORD: ${DB_PASS}
       WORDPRESS_DB_NAME: ${DB_NAME}
-      WORDPRESS_AUTH_KEY: ${WORDPRESS_AUTH_KEY}
-      WORDPRESS_SECURE_AUTH_KEY: ${WORDPRESS_SECURE_AUTH_KEY}
-      WORDPRESS_LOGGED_IN_KEY: ${WORDPRESS_LOGGED_IN_KEY}
-      WORDPRESS_NONCE_KEY: ${WORDPRESS_NONCE_KEY}
-      WORDPRESS_AUTH_SALT: ${WORDPRESS_AUTH_SALT}
-      WORDPRESS_SECURE_AUTH_SALT: ${WORDPRESS_SECURE_AUTH_SALT}
-      WORDPRESS_LOGGED_IN_SALT: ${WORDPRESS_LOGGED_IN_SALT}
-      WORDPRESS_NONCE_SALT: ${WORDPRESS_NONCE_SALT}
       WORDPRESS_DEBUG: ${WORDPRESS_DEBUG}
-      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
-    container_name: developercafe_wordpress
+    container_name: ${SERVICE_GROUP}_wordpress
 
   database:
     image: mysql:8
@@ -54,7 +45,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-    container_name: developercafe_database
+    container_name: ${SERVICE_GROUP}_database
 
   webserver:
     image: nginx:latest
@@ -65,7 +56,7 @@ services:
       - ./logs/nginx:/var/log/nginx
     depends_on:
       - wordpress
-    container_name: developercafe_webserver
+    container_name: ${SERVICE_GROUP}_webserver
     environment:
       VIRTUAL_HOST: ${LOCAL_DOMAIN}
     expose:

@@ -1,4 +1,4 @@
-FROM wordpress:5.0-php7.3-fpm
+FROM wordpress:5.0-php7.2-fpm
 
 # install packages that really should just exist...
 RUN apt-get update && apt-get install -y \
@@ -17,21 +17,25 @@ RUN curl https://getcomposer.org/download/$(curl -LSs https://api.github.com/rep
     && mv composer.phar /usr/local/bin/composer \
     && mkdir /var/www/.composer
 
-# prep files needed in WP_UnitTestCase - ./bin/install-wp-tests.sh test test test developercafe_database 5.0
+# prep files needed in WP_UnitTestCase - e.g. ./bin/install-wp-tests.sh test test test developercafe_database 5.0
 RUN apt-get install -y \
     subversion \
     mysql-client
 
-# grab the latest wp-cli
-RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > wp-cli.phar \
-    && chmod +x wp-cli.phar \
-    && mv wp-cli.phar /usr/local/bin/wp
+# prep for psysh
+RUN mkdir /var/www/.config /var/www/.local /var/www/.local/share /var/www/.local/share/psysh \
+    && curl -L http://psysh.org/manual/en/php_manual.sqlite > /var/www/.local/share/psysh/php_manual.sqlite
 
 # grab the latest node and npm
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
     && apt-get install -y nodejs
 
 # wrap up loose ends
-RUN chown -R www-data:www-data /var/www/html /var/www/.composer \
+RUN chown -R www-data:www-data /var/www/html /var/www/.composer /var/www/.config /var/www/.local \
     && apt-get autoremove -y \
     && apt-get clean
+
+# get composer to install really fast
+USER www-data
+RUN composer global require hirak/prestissimo
+

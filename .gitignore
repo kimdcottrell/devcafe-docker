@@ -29,7 +29,7 @@ scss-lint-report.xml
 config.codekit
 
 /public/*
-!/public/.gitkeep
+!/public/composer.json
 
 /data/*
 !/data/.gitkeep

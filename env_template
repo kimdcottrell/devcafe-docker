@@ -1,16 +1,8 @@
-# WordPress
-WORDPRESS_AUTH_KEY=
-WORDPRESS_SECURE_AUTH_KEY=
-WORDPRESS_LOGGED_IN_KEY=
-WORDPRESS_NONCE_KEY=
-WORDPRESS_AUTH_SALT=
-WORDPRESS_SECURE_AUTH_SALT=
-WORDPRESS_LOGGED_IN_SALT=
-WORDPRESS_NONCE_SALT=
-WORDPRESS_DEBUG=0
+# Overall
+SERVICE_GROUP=developercafe
 
-# WordPress Database - must be the name of the database container in docker-compose.yml
-WORDPRESS_DB_HOST=developercafe_database
+# WordPress
+WORDPRESS_DEBUG=0
 
 # Database Config
 DB_ROOT_PASS=
