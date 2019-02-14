@@ -1,15 +1,15 @@
-# Overall
-SERVICE_GROUP=developercafe
-
 # WordPress
-WORDPRESS_DEBUG=0
+WORDPRESS_DEBUG=[int: 0 or 1]
 
-# Database Config
-DB_ROOT_PASS=
-DB_USER=
-DB_PASS=
-DB_NAME=
-DB_PORT=
+# Database
+DB_ROOT_PASS=[string: your-db-root-password]
+DB_USER=[string: your-db-username]
+DB_PASS=[string: your-db-password]
+DB_NAME=[string: your-db-name]
+DB_PORT=[int: any open port on your local machine]
 
-# Nginx Proxy - also seen in config/nginx/default.conf
-LOCAL_DOMAIN=developer.cafe
+# Overall
+SERVICE_GROUP=[string: unique-string-for-docker-container-name-grouping]
+
+# Webserver
+LOCAL_DOMAIN=[string: local-url-seen-in-etc-hosts]

@@ -20,7 +20,7 @@ root-mysql: ## Database: Start a mysql console as root
 build: ## Docker: Build or rebuild services
 	docker-compose build
 
-up: ## Docker: Builds, (re)creates, starts, and attaches to containers for a service.
+up: ## Docker: Builds (or fetch from cache), (re)creates, starts, and attaches to containers for a service.
 	docker-compose up -d
 
 down: ## Docker: Stop and remove containers, networks, images, and volumes

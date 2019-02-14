@@ -10,8 +10,8 @@
   "require": {
   },
   "require-dev": {
-    "phpunit/phpunit": "^6",
+    "phpunit/phpunit": ">=4.8 <7",
     "wp-cli/wp-cli-bundle": "*",
-    "psy/psysh": "*"
+    "psy/psysh": "^0.9.9"
   }
 }
