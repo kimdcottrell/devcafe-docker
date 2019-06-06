@@ -1,4 +1,4 @@
-FROM wordpress:5.0-php7.2-fpm
+FROM wordpress:5.0-php7.3-fpm
 
 # install packages that really should just exist...
 RUN apt-get update && apt-get install -y \
